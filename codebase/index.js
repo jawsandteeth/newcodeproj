@@ -110,9 +110,9 @@ exports.createAppointment = functions.runWith({
   // "The function must be called from an App Check verified app.");
   // }
   try {
-    var newdate= new Date(data.when);
+    const newdate= new Date(data.when);
     console.log(newdate);
-    var firestoreTimestamp = Timestamp.fromDate(new Date(data.when));
+    const firestoreTimestamp = Timestamp.fromDate(new Date(data.when));
     console.log(firestoreTimestamp);
     await db.collection("appointments").add({
       clientUser: data.user,

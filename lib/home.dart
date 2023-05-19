@@ -54,7 +54,7 @@ late Future<List<Album>> futureAlbum;
    return Scaffold(
      appBar: AppBar(
        title: const Text('Jaws and Teeth Dental Clinic'),
-       actions: [
+       /*actions: [
          IconButton(
            icon: const Icon(Icons.person),
            onPressed: () {
@@ -64,7 +64,7 @@ late Future<List<Album>> futureAlbum;
             );
            },
          )
-       ],
+       ],*/
        automaticallyImplyLeading: false,
      ),
      body: Center(
