@@ -1,0 +1,13 @@
+{
+	"queryScope": "appointments",
+	"fields": [{
+		"fieldPath": "clientUser",
+		"order": "ASCENDING"
+	}, {
+		"fieldPath": "where",
+		"order": "ASCENDING"
+	}, {
+		"fieldPath": "when",
+		"order": "ASCENDING"
+	}]
+}
