@@ -3,26 +3,26 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:intl/intl.dart';
 import 'package:date_field/date_field.dart';
-
+import 'dart:developer';
 final resourcesController = TextEditingController();
 final requiredUsersController = TextEditingController();
 
 
-enum Gender { male, female, others }
-
-Gender gender = Gender.male;
+DateTime appointmentTime = DateTime.now();
 
 Future<void> addAppointment(List<String?> clinicDetails) async {
   try {
     HttpsCallable callable =
-        FirebaseFunctions.instance.httpsCallable('addPatientsUser');
+        FirebaseFunctions.instance.httpsCallable('createAppointment');
     final result = await callable({
-      "phoneNumber": resourcesController.text,
-      "gender": gender.toString().split('.')[1],
-      "associatedClinic": clinicDetails[1],
+      "user": clinicDetails[2],
+      "clinic": clinicDetails[1],
+      "when": appointmentTime.toString(),
+    }).then((result)=>{
+      log("appointment created"),
     });
   } catch (e) {
-    print(e);
+    log("addAppointment exception" + e.toString());
   }
   return;
 }
@@ -40,14 +40,18 @@ class AddAppointmentPageState extends State<AddAppointmentPage> {
   void initState() {
     super.initState();
     resourcesController.text = "";
-    gender = Gender.male;
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String?> clinicNameTitle =
+    List<String?> appointmentDetails =
         ModalRoute.of(context)!.settings.arguments as List<String?>;
     var tag = Localizations.maybeLocaleOf(context)?.toLanguageTag();
+    log(appointmentDetails.toString());
+    if(appointmentDetails[2] == "")
+    {
+      Navigator.pop(context);
+    }
     return Scaffold(
         appBar: AppBar(
           title: const Text('Enter Appointment details'),
@@ -69,11 +73,12 @@ class AddAppointmentPageState extends State<AddAppointmentPage> {
                       ),
                       mode: DateTimeFieldPickerMode.dateAndTime,
                       autovalidateMode: AutovalidateMode.always,
-                      validator: (e) => (e?.day ?? 0) == 1
+                      /*validator: (e) => (e?.day ?? 0) == 1
                           ? 'Please not the first day'
-                          : null,
+                          : null,*/
                       onDateSelected: (DateTime value) {
-                        print(value);
+                        log(value.toString());
+                        appointmentTime = value;
                       },
                     ),
                   ),
@@ -110,7 +115,7 @@ class AddAppointmentPageState extends State<AddAppointmentPage> {
                     child: const Text('Save'),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        addAppointment(clinicNameTitle);
+                        addAppointment(appointmentDetails);
                         Navigator.pop(context);
                       }
                     },

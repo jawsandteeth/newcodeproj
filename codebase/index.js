@@ -101,6 +101,32 @@ exports.searchPatients = functions.runWith({
   console.log(response);
   return response;
 });
+exports.createAppointment = functions.runWith({
+  enforceAppCheck: false,
+}).https.onCall(async (data, context) => {
+  // if (context.app == undefined) {
+  // throw new functions.https.HttpsError(
+  // "failed-precondition",
+  // "The function must be called from an App Check verified app.");
+  // }
+  try {
+    var newdate= new Date(data.when);
+    console.log(newdate);
+    var firestoreTimestamp = Timestamp.fromDate(new Date(data.when));
+    console.log(firestoreTimestamp);
+    await db.collection("appointments").add({
+      clientUser: data.user,
+      when: newdate,
+      where: data.clinic,
+      status: "Confirmed",
+    }).then((result) => {
+      console.log("added appointment " + result);
+    });
+  } catch (e) {
+    console.log(e);
+  }
+  return {};
+});
 
 exports.addPatientsUser = functions.runWith({
   enforceAppCheck: false,

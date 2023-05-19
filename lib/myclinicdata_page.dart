@@ -527,7 +527,7 @@ class MyClinicDataPageState extends State<MyClinicDataPage> {
                                                     ),
                                                   ],
                                                 )),
-                                                Positioned(
+                                                /*Positioned(
                                                   bottom: 0,
                                                   right: 10,
                                                   child: FloatingActionButton(
@@ -538,14 +538,15 @@ class MyClinicDataPageState extends State<MyClinicDataPage> {
                                                     onPressed: () =>
                                                         log('Button pressed!'),
                                                   ),
-                                                ),
+                                                ),*/
                                               ]),
                                             )));
                                       } else {
-                                        return Text("No Upcoming appoitnments",
+                                        /*return Text("No Upcoming appoitnments",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headlineLarge);
+                                                */
                                       }
                                     },
                               ))]));
