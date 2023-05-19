@@ -399,6 +399,7 @@ class MyClinicDataPageState extends State<MyClinicDataPage> {
                                   clinicNameTitle[1] as String,
                                 );
                                 //patientAppointmentStreamController.sink.add("InvoicePayment");
+                                
                               }),
                           IconButton(
                               icon: const Icon(
