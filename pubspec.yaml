@@ -53,6 +53,7 @@ dependencies:
   logging: ^1.1.1
   flutter_svg: ^2.0.5
   date_field: ^3.0.3
+  syncfusion_flutter_calendar: ^21.2.3
 
 dev_dependencies:
   flutter_test:
